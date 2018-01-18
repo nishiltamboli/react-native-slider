@@ -10,6 +10,7 @@ import {
   StyleSheet,
   PanResponder,
   View,
+  Text,
   Easing,
   ViewPropTypes
 } from "react-native";
@@ -154,6 +155,11 @@ export default class Slider extends PureComponent {
     thumbImageStyle: ViewPropTypes.style,
 
     /**
+     * The style is applied to the thumb image text.
+     */
+    thumbImageTextStyle: ViewPropTypes.style,
+
+    /**
      * Set this to true to visually see the thumb touch rect in green.
      */
     debugTouchArea: PropTypes.bool,
@@ -229,6 +235,7 @@ export default class Slider extends PureComponent {
       thumbTintColor,
       thumbImage,
       thumbImageStyle,
+      thumbImageTextStyle,
       styles,
       style,
       trackStyle,
@@ -507,11 +514,16 @@ export default class Slider extends PureComponent {
   };
 
   _renderThumbImage = () => {
-    var {thumbImage, thumbImageStyle} = this.props;
+    var {thumbImage, thumbImageStyle, thumbImageTextStyle} = this.props;
 
     if (!thumbImage) return;
 
-    return <Image source={thumbImage} style={!thumbImageStyle ? null : thumbImageStyle} />;
+    return (
+      <View style={defaultStyles.thumbImageContainer}>
+        <Image source={thumbImage} style={!thumbImageStyle ? null : thumbImageStyle} />
+        <Text style={!thumbImageTextStyle ? null : thumbImageTextStyle}>{this.props.value}</Text>
+      </View>
+    )
   };
 }
 
@@ -542,5 +554,8 @@ var defaultStyles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: 'green',
     opacity: 0.5,
+  },
+  thumbImageContainer: {
+    flexDirection: 'column',
   }
 });
