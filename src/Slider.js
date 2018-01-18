@@ -149,6 +149,11 @@ export default class Slider extends PureComponent {
     thumbImage: Image.propTypes.source,
 
     /**
+     * The style is applied to the thumb image.
+     */
+    thumbImageStyle: ViewPropTypes.style,
+
+    /**
      * Set this to true to visually see the thumb touch rect in green.
      */
     debugTouchArea: PropTypes.bool,
@@ -223,6 +228,7 @@ export default class Slider extends PureComponent {
       maximumTrackTintColor,
       thumbTintColor,
       thumbImage,
+      thumbImageStyle,
       styles,
       style,
       trackStyle,
@@ -501,11 +507,11 @@ export default class Slider extends PureComponent {
   };
 
   _renderThumbImage = () => {
-    var {thumbImage} = this.props;
+    var {thumbImage, thumbImageStyle} = this.props;
 
     if (!thumbImage) return;
 
-    return <Image source={thumbImage} />;
+    return <Image source={thumbImage} style={!thumbImageStyle ? null : thumbImageStyle} />;
   };
 }
 
